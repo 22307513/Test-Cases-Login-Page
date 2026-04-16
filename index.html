@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="message"></p>
+</div>
+
+<script>
+  function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const message = document.getElementById('message');
+
+    // TC_03: Empty fields
+    if (username === '' || password === '') {
+      message.innerText = "Fields cannot be empty";
+      message.className = "error";
+      return;
+    }
+
+    // TC_04: SQL Injection basic
+    if (username.includes("' OR '1'='1") || username.includes("' OR 1=1")) {
+      message.innerText = "SQL Injection detected";
+      message.className = "error";
+      return;
+    }
+
+    // TC_02: Invalid login
+    if (username !== "22307513@student.ciu.edu.tr" || password !== "password123") {
+      message.innerText = "Invalid credentials";
+      message.className = "error";
+      return;
+    }
+
+    // TC_01: Valid login
+    message.innerText = "Login successful! Redirecting...";
+    message.className = "success";
+
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
